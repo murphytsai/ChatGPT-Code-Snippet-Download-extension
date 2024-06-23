@@ -9,6 +9,11 @@ This JavaScript script enhances code snippet functionality on a ChatGPT-generate
 - Supports JavaScript, HTML, CSS, Python, and defaults to `.txt` for unrecognized languages.
 - Utilizes modern browser APIs (`showSaveFilePicker`) for saving files where available, with a fallback for other browsers.
 
+## Screenshots
+
+![Screenshot 1](pic1.png)
+![Screenshot 2](pic2.png)
+
 ## How to Use in Chrome Developer Tools
 
 ### Prerequisites
