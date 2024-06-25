@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "ChatGPT Code Snippet Download",
+  "version": "1.0",
+  "description": "Enhances code snippet functionality on a ChatGPT-generated website.",
+  "permissions": ["activeTab"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon48.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon48.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
+
