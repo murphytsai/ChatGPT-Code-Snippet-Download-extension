@@ -6,11 +6,11 @@ function debugLog(message) {
 
 function addCreateFileButton(container) {
   if (container.querySelector('#update-vscode-btn')) {
-    debugLog('Create File button already exists in this container');
+    // debugLog('Create File button already exists in this container');
     return;
   }
 
-  debugLog('Adding Create File button to container');
+  // debugLog('Adding Create File button to container');
 
   const createFileBtn = document.createElement('button');
   createFileBtn.textContent = 'Create File';
@@ -30,15 +30,16 @@ function addCreateFileButton(container) {
   const actionsDiv = container.querySelector('.flex.items-center');
   if (actionsDiv) {
     actionsDiv.insertBefore(createFileBtn, actionsDiv.firstChild);
-    debugLog('Create File button added successfully');
+    // debugLog('Create File button added successfully');
   } else {
     debugLog('Actions div not found in container');
   }
 }
 
 async function handleCreateFile(container) {
-  debugLog('Create File button clicked');
+  // debugLog('Create File button clicked');
 
+  // Find the code content
   const codeElement = container.nextElementSibling;
   if (!codeElement || !codeElement.textContent) {
     debugLog('Code content not found');
@@ -46,28 +47,20 @@ async function handleCreateFile(container) {
   }
 
   const codeContent = codeElement.textContent;
-  debugLog(`Code content length: ${codeContent.length} characters`);
+  // debugLog(`Code content length: ${codeContent.length} characters`);
 
   const languageSpan = container.querySelector('span');
   const language = languageSpan ? languageSpan.textContent.trim().toLowerCase() : '';
-  debugLog(`Detected language: ${language}`);
+  // debugLog(`Detected language: ${language}`);
 
   let extension = '.txt';
   switch (language) {
     case 'javascript':
       extension = '.js';
       break;
-    case 'html':
-      extension = '.html';
-      break;
-    case 'css':
-      extension = '.css';
-      break;
     case 'python':
       extension = '.py';
       break;
-    case 'java':
-      extension = '.java';
       break;
     case 'c#':
       extension = '.cs';
@@ -78,24 +71,15 @@ async function handleCreateFile(container) {
     case 'ruby':
       extension = '.rb';
       break;
-    case 'go':
-      extension = '.go';
-      break;
-    case 'swift':
-      extension = '.swift';
-      break;
-    case 'sql':
-      extension = '.sql';
-      break;
-    case 'json':
-      extension = '.json';
-      break;
     default:
-      extension = '.txt';
+      extension = `.${language}`;
       break;
   }
 
+  // Create a more descriptive filename
   const defaultFilename = `code_snippet_${language}${extension}`;
+
+  // Create a Blob with the code content
   const blob = new Blob([codeContent], { type: 'text/plain' });
 
   try {
@@ -109,9 +93,9 @@ async function handleCreateFile(container) {
     });
 
     if (response.success) {
-      debugLog('File download initiated');
+      //debugLog('File download initiated');
     } else if (response.cancelled) {
-      debugLog('File download cancelled by user');
+      //debugLog('File download cancelled by user');
       // Don't show an error message for user cancellation
     } else {
       debugLog('Failed to initiate file download');
@@ -123,15 +107,15 @@ async function handleCreateFile(container) {
   }
 }
 
-function addButtonsToExistingContainers() {
-  debugLog('Checking for existing containers');
-  const containers = document.querySelectorAll('.flex.items-center.relative.text-token-text-secondary.bg-token-main-surface-secondary.px-4.py-2.text-xs.font-sans.justify-between.rounded-t-md');
-  debugLog(`Found ${containers.length} containers`);
-  containers.forEach((container, index) => {
-    debugLog(`Processing container ${index + 1}`);
-    addCreateFileButton(container);
-  });
-}
+//function addButtonsToExistingContainers() {
+//  debugLog('Checking for existing containers');
+//  const containers = document.querySelectorAll('.flex.items-center.relative.text-token-text-secondary.bg-token-main-surface-secondary.px-4.py-2.text-xs.font-sans.justify-between.rounded-t-md');
+//  debugLog(`Found ${containers.length} containers`);
+//  containers.forEach((container, index) => {
+//    debugLog(`Processing container ${index + 1}`);
+//    addCreateFileButton(container);
+//  });
+//}
 
 const observer = new MutationObserver(mutations => {
   mutations.forEach(mutation => {
@@ -152,8 +136,8 @@ const observer = new MutationObserver(mutations => {
 observer.observe(document.body, { childList: true, subtree: true });
 debugLog('MutationObserver started');
 
-setInterval(addButtonsToExistingContainers, 3000);
+//setInterval(addButtonsToExistingContainers, 3000);
 
-addButtonsToExistingContainers();
+//addButtonsToExistingContainers();
 
-debugLog('Script initialized');
+//debugLog('Script initialized');

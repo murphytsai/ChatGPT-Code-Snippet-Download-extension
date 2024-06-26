@@ -2,8 +2,16 @@
   "manifest_version": 3,
   "name": "ChatGPT Code Snippet Download",
   "version": "1.0",
-  "description": "Enhances code snippet functionality on a ChatGPT-generated website.",
-  "permissions": ["activeTab"],
+  "description": "Enhance code snippet functionality by adding a 'Create File' button.",
+  "icons": {
+    "16": "icons/icon48.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon48.png"
+  },
+  "permissions": [
+  "activeTab", 
+  "downloads"
+],
   "background": {
     "service_worker": "background.js"
   },
@@ -14,11 +22,7 @@
       "128": "icons/icon128.png"
     }
   },
-  "icons": {
-    "16": "icons/icon48.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
-  },
+
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
