@@ -4,9 +4,9 @@
   "version": "1.0",
   "description": "Enhance code snippet functionality by adding a 'Create File' button.",
   "icons": {
-    "16": "icon48.png",
-    "48": "icon48.png",
-    "128": "icon48.png"
+    "16": "icons/icon48.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon48.png"
   },
   "permissions": [
     "activeTab",
@@ -24,7 +24,7 @@
   ],
   "browser_action": {
     "default_icon": {
-      "128": "icon48.png"
+      "128": "icons/icon48.png"
     }
   },
   "applications": {
