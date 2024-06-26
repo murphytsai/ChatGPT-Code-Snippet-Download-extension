@@ -1,5 +1,3 @@
-// content.js
-
 function debugLog(message) {
   console.log(`[${new Date().toISOString()}] ${message}`);
 }
@@ -61,7 +59,6 @@ async function handleCreateFile(container) {
     case 'python':
       extension = '.py';
       break;
-      break;
     case 'c#':
       extension = '.cs';
       break;
@@ -83,31 +80,52 @@ async function handleCreateFile(container) {
   const blob = new Blob([codeContent], { type: 'text/plain' });
 
   try {
-    // Try to use the showSaveFilePicker API
-    if ('showSaveFilePicker' in window) {
-      const handle = await window.showSaveFilePicker({
-        suggestedName: defaultFilename,
-        types: [{
-          description: 'Text Files',
-          accept: {'text/plain': [extension]}
-        }],
+    if (isChrome()) {
+      // Try to use the showSaveFilePicker API
+      if ('showSaveFilePicker' in window) {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: defaultFilename,
+          types: [{
+            description: 'Text Files',
+            accept: {'text/plain': [extension]}
+          }],
+        });
+        const writable = await handle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+        // debugLog('File saved using showSaveFilePicker API');
+      } else {
+        // Fallback for browsers that don't support showSaveFilePicker
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = defaultFilename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        // debugLog('File download initiated using fallback method');
+      }
+    } else if (isFirefox()) {
+      // For Firefox: Send message to background script
+      const response = await browser.runtime.sendMessage({
+        action: 'downloadFile',
+        payload: {
+          content: codeContent,
+          filename: defaultFilename
+        }
       });
-      const writable = await handle.createWritable();
-      await writable.write(blob);
-      await writable.close();
-      // debugLog('File saved using showSaveFilePicker API');
-    } else {
-      // Fallback for browsers that don't support showSaveFilePicker
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = defaultFilename;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      // debugLog('File download initiated using fallback method');
+
+      if (response.success) {
+        // debugLog('File download initiated');
+      } else if (response.cancelled) {
+        // debugLog('File download cancelled by user');
+        // Don't show an error message for user cancellation
+      } else {
+        debugLog('Failed to initiate file download');
+        alert('1There was an error saving the file. Please try again.');
+      }
     }
   } catch (err) {
     // Check if the error is due to the user cancelling the save dialog
@@ -121,15 +139,13 @@ async function handleCreateFile(container) {
   }
 }
 
-// function addButtonsToExistingContainers() {
-//   debugLog('Checking for existing containers');
-//   const containers = document.querySelectorAll('.flex.items-center.relative.text-token-text-secondary.bg-token-main-surface-secondary.px-4.py-2.text-xs.font-sans.justify-between.rounded-t-md');
-//   debugLog(`Found ${containers.length} containers`);
-//   containers.forEach((container, index) => {
-//     debugLog(`Processing container ${index + 1}`);
-//     addCreateFileButton(container);
-//   });
-// }
+function isChrome() {
+  return !!window.chrome && !!window.chrome.runtime && !!window.chrome.runtime.id;
+}
+
+function isFirefox() {
+  return typeof InstallTrigger !== 'undefined';
+}
 
 const observer = new MutationObserver(mutations => {
   mutations.forEach(mutation => {
@@ -149,10 +165,3 @@ const observer = new MutationObserver(mutations => {
 
 observer.observe(document.body, { childList: true, subtree: true });
 debugLog('MutationObserver started');
-
-// setInterval(addButtonsToExistingContainers, 3000);
-
-// addButtonsToExistingContainers();
-
-// debugLog('Script initialized');
-
