@@ -4,10 +4,16 @@ This repository contains JavaScript scripts for browser extensions that enhance 
 
 ## Features
 
-- Adds "Create File" buttons to code snippet containers dynamically.
+- Adds "Create File" buttons 🆕 to code snippet containers dynamically.
 - Detects the programming language from the container's content.
-- Supports JavaScript, HTML, CSS, Python, and defaults to `.txt` for unrecognized languages.
-- Utilizes the `showSaveFilePicker` browser API for saving files where supported, with a fallback mechanism for other browsers.
+- Supports multiple programming languages:
+  - JavaScript 📜 (`*.js`)
+  - Python 🐍 (`*.py`)
+  - C# 🎯 (`*.cs`)
+  - C++ ⚙️ (`*.cpp`)
+  - Ruby 💎 (`*.rb`)
+- Defaults to the detected language's extension for unrecognized languages 🏷️.
+- Utilizes the `showSaveFilePicker` browser API for saving files where supported, with a fallback mechanism for other browsers 🔙.
 
 ## Screenshots
 
@@ -66,10 +72,16 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 特點
 
-- 動態添加“創建文件”按鈕到程式碼片段容器。
+- 動態添加“創建文件”按鈕 🆕 到程式碼片段容器。
 - 從容器的內容中檢測程式語言。
-- 支持 JavaScript、HTML、CSS、Python，並為無法識別的語言默認為 `.txt`。
-- 在支持的情況下使用 `showSaveFilePicker` 瀏覽器 API 進行文件保存，並為其他瀏覽器提供回退機制。
+- 支持多種程式語言：
+  - JavaScript 📜（`*.js`）
+  - Python 🐍（`*.py`）
+  - C# 🎯（`*.cs`）
+  - C++ ⚙️（`*.cpp`）
+  - Ruby 💎（`*.rb`）
+- 對於無法識別的語言默認使用該語言的擴展名 🏷️。
+- 在支持的情況下使用 `showSaveFilePicker` 瀏覽器 API 進行文件保存，並為其他瀏覽器提供回退機制 🔙。
 
 ## 截圖
 
