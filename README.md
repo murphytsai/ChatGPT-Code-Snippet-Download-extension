@@ -1,4 +1,4 @@
-# ChatGPT Code Snippet Download 🛠️
+# ChatGPT Code Snippet Download Extension 🛠️
 
 This repository contains JavaScript scripts for browser extensions that enhance code snippet functionality on ChatGPT-generated websites. It adds a "Create File" button to code snippet containers, allowing users to download the code with an appropriate file extension based on the detected programming language.
 
